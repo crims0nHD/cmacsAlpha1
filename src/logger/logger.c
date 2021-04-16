@@ -8,7 +8,7 @@ static bool initialized = 0;
 int log_init(char *filepath) {
   if (initialized) {
     logerror("Log is already initialized");
-    return 1;
+    return -1;
   }
 
   if (file != NULL)
@@ -21,7 +21,7 @@ int log_init(char *filepath) {
 int log_exit() {
   if (!initialized) {
     logerror("Log is not initialized");
-    return 1;
+    return -1;
   }
 
   if (file != NULL)
@@ -33,8 +33,7 @@ int log_exit() {
 
 int logerror(char *error) {
   if (!initialized) {
-    logerror("Log is not initialized\n");
-    return 1;
+    return -1;
   }
 
   fprintf(stderr, "%s\n", error);
@@ -45,8 +44,7 @@ int logerror(char *error) {
 
 int logwarning(char *warning) {
   if (!initialized) {
-    logerror("Log is not initialized\n");
-    return 1;
+    return -1;
   }
 
   fprintf(stderr, "%s\n", warning);
@@ -57,8 +55,7 @@ int logwarning(char *warning) {
 
 int logmessage(char *message) {
   if (!initialized) {
-    logerror("Log is not initialized\n");
-    return 1;
+    return -1;
   }
 
   fprintf(stdout, "%s\n", message);

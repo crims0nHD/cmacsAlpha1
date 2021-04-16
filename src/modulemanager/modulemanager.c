@@ -74,6 +74,6 @@ int mmanager_cleanup() {
   return 0;
 }
 
-int mmanager_module_cleanup() {}
+int mmanager_module_cleanup() { return 0; }
 
-int mmanager_exit() {}
+int mmanager_exit() { return 0; }

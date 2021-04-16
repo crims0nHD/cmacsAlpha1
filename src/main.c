@@ -6,6 +6,7 @@ static int cleanup_resources() {
   log_exit();
   mmanager_module_cleanup();
   mmanager_cleanup();
+  mmanager_exit();
   return 0;
 }
 
