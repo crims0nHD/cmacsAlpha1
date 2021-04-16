@@ -1,5 +1,6 @@
 #include "modulemanager.h"
 #include <stdlib.h>
+#include <string.h>
 
 struct n_module {
   unsigned int id;
@@ -15,7 +16,6 @@ static n_module_t *module_nodes_end;
 
 static int m_addNode(char *name) {
   n_module_t *newnode = malloc(sizeof(n_module_t));
-  newnode->name = name;
   newnode->nextnode = NULL;
   newnode->id = module_nodes_end->id++;
 
@@ -23,6 +23,9 @@ static int m_addNode(char *name) {
   module_nodes_end->nextnode = newnode;
 
   module_nodes_end = newnode;
+
+  newnode->name = malloc(sizeof(char) * strlen(name));
+  strcpy(newnode->name, name);
 
   return 0;
 }
@@ -53,7 +56,9 @@ int mmanager_init() {
   /*Setup node list*/
   module_nodes_start = malloc(sizeof(n_module_t));
   module_nodes_start->id = 0;
-  module_nodes_start->name = "ModuleManager";
+  char *mmname = "ModuleManager";
+  module_nodes_start->name = malloc(sizeof(char) * strlen(mmname));
+  strcpy(module_nodes_start->name, mmname);
   module_nodes_start->lastnode = NULL;
   module_nodes_start->nextnode = NULL;
   module_nodes_end = module_nodes_start;

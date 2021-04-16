@@ -10,13 +10,11 @@ static int cleanup_resources() {
 }
 
 int main(int argc, char **argv) {
-  // Parse arguments
-
   log_init(NULL);
   mmanager_init();
-  logmessage("Started Application...");
+  logwarning("Started Application...");
 
-  cleanup_resources();
   logmessage("Stopped Application");
+  cleanup_resources();
   return 0;
 }
