@@ -1,3 +1,4 @@
+#include "buffer.h"
 #include "core.h"
 #include <stdbool.h>
 #include <stdlib.h>
@@ -12,9 +13,24 @@ typedef struct lln_buffer {
 static lln_buffer_t *ll_start;
 static lln_buffer_t *ll_end;
 
-static int lln_remove(lln_buffer_t)
+static int lln_remove(lln_buffer_t *node) {
+  if (b_checkflag(node->this, B_FLAG_PROTECTED)) {
+    return -1;
+  }
 
-    int bman_init() {
+  return 0;
+}
+
+static int lln_add(buffer_t *buffer) {
+  lln_buffer_t *temp = malloc(sizeof(lln_buffer_t));
+  temp->this = buffer;
+  temp->next = NULL;
+  temp->prev = ll_end;
+  ll_end = temp;
+  return 0;
+}
+
+int bman_init() {
   // setup the list
   ll_start = malloc(sizeof(lln_buffer_t));
   ll_end = ll_start;
@@ -39,7 +55,8 @@ int bman_exit() {
   while (purge != NULL) {
     b_delete(purge->this);
     purge = purge->next;
-
-    if (purge->prev != ll_start)
+    lln_remove(purge->prev);
   }
+
+  return 0;
 }
