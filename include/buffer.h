@@ -18,7 +18,7 @@ typedef struct buffer {
 } buffer_t;
 
 // Check if a flag is set on a buffer
-extern bool b_checkflag(buffer_t *buffer, unsigned int flag);
+extern bool b_checkflag(buffer_t *b, unsigned int flag);
 
 // Create new buffer; return -1 if unsuccessful
 extern buffer_t *b_create(char *name, bool readonly, bool protected);

@@ -1,6 +1,7 @@
 #ifndef __VISUAL_H_
 #define __VISUAL_H_
 
+#include "buffer.h"
 #include "core.h"
 #include <stdbool.h>
 
