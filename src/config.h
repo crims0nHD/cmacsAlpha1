@@ -9,4 +9,9 @@
 /* ----------------------------- */
 #define TUI_NCURSES true
 
+/* Debug settings */
+/* -------------- */
+#define DEBUG_CREATE_FILE_STRUCTURE true
+const char* DEBUG_LOG_PATH = "/tmp/cmacsLog.txt";
+
 #endif // __CONFIG_H_

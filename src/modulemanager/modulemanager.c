@@ -1,66 +1,55 @@
 #include "modulemanager.h"
+#include "types/linkedlist.h"
 #include <stdlib.h>
 #include <string.h>
 
-struct n_module {
+typedef struct n_module {
   unsigned int id;
   char *name;
+} n_module;
 
-  struct n_module *nextnode;
-  struct n_module *lastnode;
-};
-typedef struct n_module n_module_t;
-
-static n_module_t *module_nodes_start;
-static n_module_t *module_nodes_end;
+static LLnode *module_nodes_start, *module_nodes_end;
 
 static int m_addNode(char *name) {
-  n_module_t *newnode = malloc(sizeof(n_module_t));
-  newnode->nextnode = NULL;
-  newnode->id = module_nodes_end->id++;
+  n_module *m = malloc(sizeof(n_module));
+  LLnode *nextn = LL_addNode(module_nodes_end, m);
 
-  newnode->lastnode = module_nodes_end;
-  module_nodes_end->nextnode = newnode;
+  m->id = ((n_module *)module_nodes_end->content)->id++;
+  m->name = malloc(sizeof(char) * strlen(name));
+  strcpy(m->name, name);
 
-  module_nodes_end = newnode;
-
-  newnode->name = malloc(sizeof(char) * strlen(name));
-  strcpy(newnode->name, name);
-
+  module_nodes_end = nextn;
   return 0;
 }
 
-static int m_remNode(n_module_t *module) {
-  /*If the module to be removed is the first in the list*/
-  if (module == module_nodes_start) {
-    module_nodes_start = module->nextnode;
-  } else {
-    module->lastnode->nextnode = module->nextnode;
-  }
-
-  /*If the module to be removed is the last in the list*/
-  if (module == module_nodes_end) {
-    module_nodes_end = module->lastnode;
-  } else {
-    module->nextnode->lastnode = module->lastnode;
-  }
-
+static int m_remNode(LLnode *n) {
+  n_module *m = n->content;
   /*Free the allocated Dogs*/
-  free(module->name);
-  free(module);
+  free(m->name);
+  free(m);
+  n->content = NULL;
+
+  if (LL_nextNode(n) == NULL)
+    module_nodes_end = LL_prevNode(n);
+
+  if (LL_prevNode(n) == NULL) {
+    module_nodes_start = LL_nextNode(n);
+  }
+
+  LL_remNode(n);
 
   return 0;
 }
 
 int mmanager_init() {
   /*Setup node list*/
-  module_nodes_start = malloc(sizeof(n_module_t));
-  module_nodes_start->id = 0;
+  n_module *m = malloc(sizeof(n_module));
+  m->id = 0;
   char *mmname = "ModuleManager";
-  module_nodes_start->name = malloc(sizeof(char) * strlen(mmname));
-  strcpy(module_nodes_start->name, mmname);
-  module_nodes_start->lastnode = NULL;
-  module_nodes_start->nextnode = NULL;
+  m->name = malloc(sizeof(char) * strlen(mmname));
+  strcpy(m->name, mmname);
+
+  module_nodes_start = LL_addNode(NULL, m);
   module_nodes_end = module_nodes_start;
 
   return 0;
