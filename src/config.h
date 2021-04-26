@@ -12,6 +12,10 @@
 /* Debug settings */
 /* -------------- */
 #define DEBUG_CREATE_FILE_STRUCTURE true
-const char* DEBUG_LOG_PATH = "/tmp/cmacsLog.txt";
+#define DEBUG_LOG_PATH "/tmp/cmacsLog.txt"
+
+/* On Startup */
+/* ---------- */
+extern int OnStartup();
 
 #endif // __CONFIG_H_

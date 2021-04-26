@@ -1,4 +1,5 @@
 #include "logger.h"
+#include "config.h"
 #include <stdbool.h>
 #include <stdio.h>
 
@@ -36,7 +37,10 @@ int logerror(char *error) {
     return -1;
   }
 
+#ifndef TUI_NCURSES
   fprintf(stderr, "%s\n", error);
+#endif
+
   if (file != NULL)
     fprintf(file, "ERROR: %s\n", error);
   return 0;
@@ -47,7 +51,10 @@ int logwarning(char *warning) {
     return -1;
   }
 
+#ifndef TUI_NCURSES
   fprintf(stderr, "%s\n", warning);
+#endif
+
   if (file != NULL)
     fprintf(file, "WARNING: %s\n", warning);
   return 0;
@@ -58,7 +65,10 @@ int logmessage(char *message) {
     return -1;
   }
 
+#ifndef TUI_NCURSES
   fprintf(stdout, "%s\n", message);
+#endif
+
   if (file != NULL)
     fprintf(file, "MESSAGE: %s\n", message);
   return 0;

@@ -8,7 +8,7 @@ enum {
   IMOD_SUPER = 1 << 3
 };
 
-extern int input_map_key(int *fun, unsigned int key, unsigned int mods);
+extern int input_map_key(int (*fun)(void), unsigned int key, unsigned int mods);
 
 extern int input_umap_key(unsigned int key, unsigned int mods);
 

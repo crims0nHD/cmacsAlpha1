@@ -6,6 +6,8 @@
 
 #include <stdbool.h>
 
+extern int OnStartup();
+
 static int cleanup_resources() {
   log_exit();
   mmanager_module_cleanup();
@@ -30,6 +32,8 @@ int main(int argc, char **argv) {
   log_init(NULL);
   mmanager_init();
   logwarning("Started Application...");
+
+  OnStartup();
 
   if (TUI_NCURSES) {
     display_ncurses_start();
