@@ -6,13 +6,14 @@
 
 #include <stdbool.h>
 
-extern int OnStartup();
-
 static int cleanup_resources() {
-  log_exit();
   mmanager_module_cleanup();
   mmanager_cleanup();
   mmanager_exit();
+
+  if (DEBUG_LOG_ECHO_AFTER_CLOSE)
+    log_echo();
+  log_exit();
   return 0;
 }
 
@@ -29,7 +30,7 @@ static void loop() {
 }
 
 int main(int argc, char **argv) {
-  log_init(NULL);
+  log_init(DEBUG_LOG_PATH);
   mmanager_init();
   logwarning("Started Application...");
 

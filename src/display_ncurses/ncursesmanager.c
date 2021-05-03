@@ -70,7 +70,11 @@ int display_ncurses_routine_input() {
     if (kc.isShift)
       mods |= IMOD_SHIFT;
 
-    input_do_key(kc.key, mods);
+    int ret = input_do_key(kc.key, mods);
+
+    if (ret == -1) {
+      return -1;
+    }
   }
 
   return 0;

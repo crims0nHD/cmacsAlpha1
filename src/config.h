@@ -13,6 +13,7 @@
 /* -------------- */
 #define DEBUG_CREATE_FILE_STRUCTURE true
 #define DEBUG_LOG_PATH "/tmp/cmacsLog.txt"
+#define DEBUG_LOG_ECHO_AFTER_CLOSE true
 
 /* On Startup */
 /* ---------- */

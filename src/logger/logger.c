@@ -2,9 +2,11 @@
 #include "config.h"
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 static FILE *file;
-static bool initialized = 0;
+static bool initialized = false;
 
 int log_init(char *filepath) {
   if (initialized) {
@@ -29,6 +31,41 @@ int log_exit() {
     fclose(file);
 
   initialized = false;
+  return 0;
+}
+
+int log_echo(char *filepath) {
+  if (initialized)
+    return -1;
+
+  char cmdBuffer[2048];
+
+  if (strlen(filepath) >= 2048 - 100) {
+    return -2;
+  }
+
+  strcpy(cmdBuffer, "/bin/sh -c \"cat ");
+  strcat(cmdBuffer, filepath);
+  strcat(cmdBuffer, "\"");
+
+  FILE *fp;
+  char path[1035];
+
+  /* Open the command for reading. */
+  fp = popen(cmdBuffer, "r");
+  if (fp == NULL) {
+    logerror("Failed to run command\n");
+    return -3;
+  }
+
+  /* Read the output a line at a time - output it. */
+  while (fgets(path, sizeof(path), fp) != NULL) {
+    printf("%s", path);
+  }
+
+  /* close */
+  pclose(fp);
+
   return 0;
 }
 

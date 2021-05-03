@@ -4,4 +4,7 @@
 // Stops execution immediatly
 extern int ForceStop();
 
+// Gracefully stops the Application
+extern int Stop();
+
 #endif // USERSPACE_H_

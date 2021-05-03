@@ -4,7 +4,8 @@
 #include "userspace.h"
 
 int keybindings() {
-  input_map_key(&ForceStop, 'c', IMOD_CTRL);
+  input_map_key(&Stop, 'c', IMOD_CTRL);
+  input_map_key(&ForceStop, 'x', IMOD_CTRL);
   return 0;
 }
 
