@@ -6,7 +6,7 @@ SRC_DIR = ./src
 SRC_SUBDIRS = $(shell find $(SRC_DIR)/* -type d | cut -d/ -f3)
 
 CC = gcc
-FLAGS := -Wall -g -std=c99
+FLAGS := -Wall -g -std=gnu99
 
 SRCS = $(shell find $(SRC_DIR) -name "*.c")
 OBJS = $(patsubst %.c,%.o, $(patsubst $(SRC_DIR)%,$(OBJ_DIR)%,$(SRCS)))
@@ -36,6 +36,8 @@ obj/modulemanager/%.o: src/modulemanager/%.c
 	$(CC) -o $@ -c -I$(INCLUDE_DIR) -I$(CONFIG_DIR) $(FLAGS) $<
 obj/visual/%.o: src/visual/%.c
 	$(CC) -o $@ -c -I$(INCLUDE_DIR) -I$(CONFIG_DIR) $(FLAGS) $<
+
+
 
 directories:
 	@mkdir -vp $(BIN_DIR) 

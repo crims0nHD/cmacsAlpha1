@@ -6,6 +6,9 @@
 #include <stdio.h>
 #include <string.h>
 
+extern int render();
+extern char *getScreenbuffer();
+
 int display_ncurses_start() {
   void *wind = initscr();
   if (wind == NULL)
@@ -72,7 +75,7 @@ int display_ncurses_routine_input() {
 
     int ret = input_do_key(kc.key, mods);
 
-    if (ret == -1) {
+    if (ret == -100) {
       return -1;
     }
   }
@@ -80,4 +83,12 @@ int display_ncurses_routine_input() {
   return 0;
 }
 
-int display_ncurses_routine_output() { return 0; }
+int display_ncurses_routine_output() {
+  render();
+  char *currentScreenbuffer = getScreenbuffer();
+
+  clear();
+  mvprintw(0, 0, currentScreenbuffer);
+  refresh();
+  return 0;
+}

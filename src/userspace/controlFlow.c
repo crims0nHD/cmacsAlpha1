@@ -10,5 +10,5 @@ int ForceStop() {
 int Stop() {
   logwarning("Stopping now!");
 
-  return -1;
+  return -100;
 }
